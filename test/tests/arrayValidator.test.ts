@@ -17,40 +17,40 @@ import { model as ArrayValidators } from '../models/arrayValidators';
 export function suite() {
   it('should respect maxlength', (done) => {
     expect(ArrayValidators.create({
-      maxLength: ['this is too long'],
+      maxLength: ['this is too long']
     })).to.eventually.rejectedWith(mongoose.Error.ValidationError).and.notify(done);
   });
 
   it('should respect minlength', (done) => {
     expect(ArrayValidators.create({
-      minLength: ['too short'],
+      minLength: ['too short']
     })).to.eventually.rejectedWith(mongoose.Error.ValidationError).and.notify(done);
   });
 
   it('should trim', async () => {
     const trimmed = await ArrayValidators.create({
-      trimmed: ['trim my end    '],
+      trimmed: ['trim my end    ']
     });
     expect(trimmed.trimmed[0]).equals('trim my end');
   });
 
   it('should uppercase', async () => {
     const uppercased = await ArrayValidators.create({
-      uppercased: ['make me uppercase'],
+      uppercased: ['make me uppercase']
     });
     expect(uppercased.uppercased[0]).equals('MAKE ME UPPERCASE');
   });
 
   it('should lowercase', async () => {
     const lowercased = await ArrayValidators.create({
-      lowercased: ['MAKE ME LOWERCASE'],
+      lowercased: ['MAKE ME LOWERCASE']
     });
     expect(lowercased.lowercased[0]).equals('make me lowercase');
   });
 
   it('should respect enum', (done) => {
     expect(ArrayValidators.create({
-      enumed: ['not in the enum'],
+      enumed: ['not in the enum']
     })).to.eventually.rejectedWith(mongoose.Error).and.notify(done);
   });
 

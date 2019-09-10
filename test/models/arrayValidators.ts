@@ -1,6 +1,6 @@
-import { arrayProp, Typegoose } from '../../src/typegoose';
+import { arrayProp, getModelForClass } from '../../src/typegoose';
 
-export class ArrayValidators extends Typegoose {
+export class ArrayValidators {
   // @ts-ignore
   @arrayProp({ items: String, maxlength: 3 })
   public maxLength: string[];
@@ -29,4 +29,4 @@ export class ArrayValidators extends Typegoose {
   public defaulted: string[];
 }
 
-export const model = new ArrayValidators().getModelForClass(ArrayValidators);
+export const model = getModelForClass(ArrayValidators);
