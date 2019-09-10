@@ -1,3 +1,5 @@
+import { schemas } from '../../src/internal/data';
+import { getName } from '../../src/internal/utils';
 import { arrayProp, getModelForClass } from '../../src/typegoose';
 
 export class ArrayValidators {
@@ -30,3 +32,4 @@ export class ArrayValidators {
 }
 
 export const model = getModelForClass(ArrayValidators);
+console.log('hi', schemas.get(getName(ArrayValidators)));

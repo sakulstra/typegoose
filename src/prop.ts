@@ -187,11 +187,11 @@ function baseProp(
   if (utils.isPrimitive(Type)) {
     switch (whatis) {
       case WhatIsIt.ARRAY:
-        schemas.get(name)[key] = {
+        schemas.get(name)[key] = [{
           ...schemas.get(name)[key][0],
           ...options,
-          type: [Type]
-        };
+          type: Type
+        }];
 
         return;
       case WhatIsIt.MAP:
