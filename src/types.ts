@@ -232,6 +232,26 @@ export interface ArrayPropOptions extends BasePropOptions {
   itemsRefPath?: any;
   /** Same as {@link PropOptions.refType}, only that it is for an array */
   itemsRefType?: RefSchemaType;
+  /**
+   * Use this to define inner-options
+   * Reason this exists: https://github.com/Automattic/mongoose/issues/8012#issuecomment-530950625
+   * Every other option (that is not in an interface here), that is not defined in here will be "outer-options"
+   *
+   * Please open a new issue if some option is mismatched or not existing / mapped
+   */
+  innerOptions?: {
+    [key: string]: any;
+  };
+  /**
+   * Use this to define outer-options
+   * Reason this exists: https://github.com/Automattic/mongoose/issues/8012#issuecomment-530950625
+   * this is used to override mapped options to be always outer-options
+   *
+   * Please open a new issue if some option is mismatched or not existing / mapped
+   */
+  outerOptions?: {
+    [key: string]: any;
+  };
 }
 
 export interface MapPropOptions extends BasePropOptions {
@@ -256,4 +276,9 @@ export interface IModelOptions {
      */
     customName?: string;
   };
+}
+
+export interface ImapArrayOptions {
+  outerOptions: Omit<ArrayPropOptions, 'innerOptions'>;
+  innerOptions: { [key: string]: any };
 }

@@ -56,8 +56,6 @@ export function suite() {
 
   it('should lowercase & have a default', async () => {
     const defaulted = await ArrayValidators.create({});
-    // @ts-ignore
-    console.log(ArrayValidators.schema.paths.defaulted);
     expect(defaulted.defaulted[0]).equals('hello');
   });
 }

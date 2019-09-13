@@ -32,4 +32,3 @@ export class ArrayValidators {
 }
 
 export const model = getModelForClass(ArrayValidators);
-console.log('hi', schemas.get(getName(ArrayValidators)));

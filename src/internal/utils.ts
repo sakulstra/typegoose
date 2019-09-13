@@ -4,6 +4,7 @@ import { isNullOrUndefined } from 'util';
 import {
   // IModelOptions,
   AnyParamConstructor,
+  ImapArrayOptions,
   IModelOptions,
   PropOptionsWithNumberValidate,
   PropOptionsWithStringValidate,
@@ -210,4 +211,79 @@ export function getName<T, U extends AnyParamConstructor<T>>(cl: U) {
 
   // return suffix ? `${baseName}_${suffix}` : baseName;
   return cl.name;
+}
+
+const arrayInnerOptions = [
+  // string validate & transform options
+  'lowercase',
+  'uppercase',
+  'maxlength',
+  'minlength',
+  'trim',
+  'match',
+
+  // number validate options
+  'min',
+  'max',
+
+  // generic options
+  'enum',
+  'validate',
+  '_id',
+  'get',
+  'set',
+  'immutable'
+];
+const arrayOuterOptions = [
+  'default',
+  'required',
+  'unique',
+  'index',
+  'sparse',
+  'expires',
+  'ref'
+];
+
+/**
+ * Map Options to "inner" & "outer"
+ * -> inner: means inner of "type: [{here})"
+ * -> outer: means outer of "type: [{}], here"
+ * @param rawOptions The raw options
+ * @param type The Type of the array
+ */
+export function mapArrayOptions(rawOptions: any, type: AnyParamConstructor<any>): ImapArrayOptions {
+  const mapped: ImapArrayOptions = {
+    innerOptions: {
+      type
+    },
+    outerOptions: {}
+  };
+
+  delete rawOptions.items;
+  delete rawOptions.type;
+
+  if (!isNullOrUndefined(rawOptions)) {
+    // this "for" is made before the other things, because they should override
+    for (const [key, value] of Object.entries(rawOptions)) {
+      if (arrayInnerOptions.includes(key)) {
+        mapped.innerOptions[key] = value;
+
+        continue;
+      }
+      if (arrayOuterOptions.includes(key)) {
+        mapped.outerOptions[key] = value;
+
+        continue;
+      }
+    }
+
+    if (typeof rawOptions.innerOptions === 'object') {
+      Object.assign(mapped.innerOptions, rawOptions.innerOptions);
+    }
+    if (typeof rawOptions.outerOptions === 'object') {
+      Object.assign(mapped.outerOptions, rawOptions.outerOptions);
+    }
+  }
+
+  return mapped;
 }
