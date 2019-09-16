@@ -1,12 +1,6 @@
 /* imports */
 import * as mongoose from 'mongoose';
-import { shim } from 'object.fromentries';
 import 'reflect-metadata';
-
-/* istanbul ignore next */
-if (!Object.fromEntries) {
-  shim();
-}
 
 import { deprecate } from 'util';
 import * as defaultClasses from './defaultClasses';
@@ -19,6 +13,7 @@ import { AnyParamConstructor, DocumentType, IModelOptions, Ref, ReturnModelType 
 
 /* exports */
 export { mongoose }; // export the internally used one, to not need to always import it
+export { setLogLevel, LogLevels } from './logSettings';
 export * from './method';
 export * from './prop';
 export * from './hooks';
